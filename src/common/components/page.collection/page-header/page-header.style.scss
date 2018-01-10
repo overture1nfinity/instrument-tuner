@@ -1,0 +1,26 @@
+.page-header-x {
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    .header-content-container {
+
+        .header-content {
+            display: flex;
+            flex-direction: row;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+
+    #header-version {
+        align-self: left;
+        position: absolute;
+        bottom: 0;
+    }
+    
+    #header-logo {
+        margin: auto;
+        font-size: 22px;
+    }
+}

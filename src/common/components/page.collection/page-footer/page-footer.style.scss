@@ -1,0 +1,30 @@
+@import "../../../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
+$page-footer-section-margin: 5px;
+$page-footer-section-social-margin: 3px;
+
+.page-footer {
+    background-color: $jumbotron-bg;
+    color: rgb(139, 139, 139);
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto !important;
+    margin: 0;
+    padding: 10px;
+
+    .page-footer-section {
+        margin-top: $page-footer-section-margin;
+        margin-bottom: $page-footer-section-margin;
+
+        .social-link {
+            margin-left: $page-footer-section-social-margin;
+            &:hover {
+                text-decoration: none;
+                color: black;
+            }
+        }
+    }
+}

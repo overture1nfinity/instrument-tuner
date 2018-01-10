@@ -1,0 +1,42 @@
+#ref-pitch-monitor {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .rpm-main {
+        display: flex;
+        width: 33%;
+        justify-content: center;
+    }
+
+    .ref-pitch {
+        display: flex;
+        justify-content: center;
+
+        min-width: 38px;
+        margin-right: 4px;
+
+        .ref-pitch-text {
+            font-size: 24px;
+        }
+
+    }
+
+    .pitch-delta {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        width: auto;
+        padding-bottom: 4px;
+
+        .pitch-delta-text {
+            text-align: left;
+            color: gray;
+            font-size: 10px;
+        }
+
+    }
+
+}

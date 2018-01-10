@@ -1,0 +1,28 @@
+<div class="alerts">
+
+    <div ng-repeat="alert in vm.instance.data">
+
+        <div ng-if="alert.closeable && alert.show">
+            <div 
+            uib-alert 
+            ng-class="['alert-' + (alert.type || alert.warning), alert.additionalClasses]"
+            close="vm.instance.closeAlert(alert.id)">
+
+                <div ng-include="alert.templateUrl"></div>
+
+            </div>
+        </div>
+
+        <div ng-if="!alert.closeable && alert.show">
+            <div 
+            uib-alert 
+            ng-class="['alert-' + (alert.type || alert.warning), alert.additionalClasses]">
+
+                <div ng-include="alert.templateUrl"></div>
+
+            </div>
+        </div>
+
+    </div>
+    
+</div>

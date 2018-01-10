@@ -1,0 +1,43 @@
+<page>
+    <page-header></page-header>
+
+    <page-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <alerts instance="vm.alerts" tpl-scope="vm"></alerts>
+                </div>
+            </div>
+            <div class="widget-row">
+                <canvas class="col-md-2 col-xs-4 widget" db-gauge></canvas>
+                <div class="col-md-4 col-xs-6 widget"><reference-pitch-monitor></reference-pitch-monitor></div>
+                <div class="col-md-2 col-xs-4 widget"><settings></settings></div>
+            </div>
+        </div>
+    </page-content>
+
+    <page-footer></page-footer>
+</page>
+
+<script type="text/ng-template" id="inline-partials/enable-mic-alert.html">
+    <button class="btn btn-primary" ng-click="vm.tplScope.selectInput()">ENABLE YOUR MIC</button>
+</script>
+
+<script type="text/ng-template" id="inline-partials/not-found-alert.html">
+    <strong>Oops!</strong> Please make sure your microphone is plugged in.
+</script>
+
+<script type="text/ng-template" id="inline-partials/not-supported-alert.html">
+    <strong>Oops!</strong> Microphone usage isn't supported on this browser. 
+    Please upgrade to the latest version of 
+    <a href="https://www.google.com/intl/en/chrome/browser/desktop/index.html">Google Chrome</a>
+    or
+    <a href="https://www.google.com/intl/en/chrome/browser/desktop/index.html">Mozilla Firefox</a>
+    or
+    any browser that supports microphone input.
+</script>
+
+
+<script type="text/ng-template" id="inline-partials/unknown-alert.html">
+    <strong>Oops!</strong> An unknown error occurred.
+</script>
