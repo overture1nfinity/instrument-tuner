@@ -9,6 +9,8 @@
     });
   
     /** @ngInject */
-    function PageHeaderController() {}
+    function PageHeaderController() {
+      this.version = 'v0.0.1';
+    }
   
 })();
