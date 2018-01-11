@@ -6,6 +6,7 @@
   "license": "MIT",
   "author": "Derek Walker (overture1nfinity)",
   "devDependencies": {
+    "angular-mocks": "^1.6.8",
     "browser-sync": "^2.18.13",
     "browser-sync-spa": "^1.0.3",
     "del": "^3.0.0",
