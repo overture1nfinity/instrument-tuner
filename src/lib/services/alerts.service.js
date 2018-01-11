@@ -44,7 +44,7 @@
         srvc.removeAlert = function(id) {
             _.forEach(this.data, function(alert, i) {
                 if(alert.id === id) {
-                    this.data.remove(i);
+                    srvc.data.splice(i, 1);
                     return false;
                 }
             });
