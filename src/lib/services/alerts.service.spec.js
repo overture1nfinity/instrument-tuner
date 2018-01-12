@@ -1,6 +1,6 @@
 'use strict';
 
-describe('alerts.service', function() {
+describe('Alerts.service', function() {
     var srvc = undefined;
 
     beforeEach(function() {
