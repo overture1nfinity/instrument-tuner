@@ -9,8 +9,11 @@
         srvc.data = [];
 
         srvc.addAlert = function(type, templateUrl, open, closeable, additionalClasses) {
+            /* istanbul ignore next */
             open = (open !== undefined) ? open : false;
+            /* istanbul ignore next */
             closeable = (closeable !== undefined) ? closeable : true;
+            /* istanbul ignore next */
             additionalClasses = (additionalClasses !== undefined) ? additionalClasses : '';
             
             let alert = {
@@ -43,6 +46,7 @@
 
         srvc.removeAlert = function(id) {
             _.forEach(this.data, function(alert, i) {
+                /* istanbul ignore else */
                 if(alert.id === id) {
                     srvc.data.splice(i, 1);
                     return false;
@@ -52,6 +56,7 @@
 
         srvc.openAlert = function(id) {
             _.forEach(this.data, function(alert) {
+                /* istanbul ignore else */
                 if(alert.id === id) {
                     alert.show = true;
                     return false;
@@ -61,6 +66,7 @@
 
         srvc.closeAlert = function(id) {
             _.forEach(this.data, function(alert) {
+                /* istanbul ignore else */
                 if(alert.id === id) {
                     alert.show = false;
                     return false;
