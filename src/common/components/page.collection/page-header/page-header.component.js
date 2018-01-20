@@ -9,6 +9,7 @@
     });
   
     /** @ngInject */
+    /* istanbul ignore next */
     function PageHeaderController() {
       this.version = 'v0.0.1';
     }

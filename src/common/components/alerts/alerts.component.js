@@ -12,6 +12,7 @@
     });
   
     /** @ngInject */
+    /* istanbul ignore next */
     function AlertsController() {}
   
 })();

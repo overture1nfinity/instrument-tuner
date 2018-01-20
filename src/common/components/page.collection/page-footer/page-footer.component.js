@@ -8,6 +8,7 @@
     });
   
     /** @ngInject */
+    /* istanbul ignore next */
     function PageFooterController() {}
   
 })();
