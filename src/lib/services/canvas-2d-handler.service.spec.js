@@ -144,8 +144,6 @@ describe('Canvas2DHandler.service', function() {
             var s = 'green';
 
             spyOn(ctx, 'beginPath');
-            spyOn(ctx, 'moveTo');
-            spyOn(ctx, 'lineTo');
             spyOn(ctx, 'stroke');
             spyOn(ctx, 'closePath');
 
