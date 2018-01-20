@@ -8,7 +8,7 @@
     });
   
     /** @ngInject */
-    function ReferencePitchMonitorController($scope, AUDIO_CFG, audioMath, audioState, pitchDetect) {
+    function ReferencePitchMonitorController($scope, AUDIO_CFG, AudioMath, audioState, pitchDetect) {
       $scope.audioState = audioState; // isolated scope
       var prevInputFreq = 0;
 
@@ -22,8 +22,9 @@
 
             if(!isNaN(pitch) && pitch > -1) {
               if(!isNaN(audioState.refPitch.noteNum) && !audioState.refPitch.shouldInit) {
-                audioState.pitchDelta = audioMath.calculatePitchDelta(
-                  pitch, pitchDetect.frequencyFromNoteNumber(audioState.refPitch.noteNum));
+                audioState.pitchDelta = AudioMath.calculatePitchDelta(
+                  pitchDetect.frequencyFromNoteNumber(audioState.refPitch.noteNum),
+                  pitch);
               }
               
               if(
