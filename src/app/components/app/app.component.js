@@ -8,7 +8,7 @@
     });
   
     /** @ngInject */
-    function AppController($scope, getUserMedia, AUDIO_CFG, audioContext, audioMath, audioState, Alerts) {
+    function AppController($scope, getUserMedia, AUDIO_CFG, audioContext, AudioMath, audioState, Alerts) {
 
       var ctrl = this;
       ctrl.alerts = Alerts;
@@ -87,7 +87,7 @@
 
       ctrl.onAudioProcess = function(e) {
         let samples = e.inputBuffer.getChannelData(0); // need to add ability to choose between channels
-        let avgSignal = audioMath.calculateAverageSignal(samples);
+        let avgSignal = AudioMath.calculateAverageSignal(samples);
         avgSignal = Math.min(avgSignal, AUDIO_CFG.SIGNAL_RANGE.max);
 
 
