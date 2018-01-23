@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-  
+    angular.module('app').controller('DbGaugeController', DbGaugeController); // for testing
     angular.module('app').directive('dbGauge', function() {
       return {
         controller: DbGaugeController,
@@ -26,11 +26,11 @@
       this.volumeColor = 'green';
 
       $scope.$on('updateDbGauge', function(e, data) {
-        ctrl.audioState.volumePct = Math.min(1.5, audioState.signal / AUDIO_CFG.SIGNAL_RANGE.clip); // 150% is max clip range
+        audioState.volumePct = Math.min(1.5, audioState.signal / AUDIO_CFG.SIGNAL_RANGE.clip); // 150% is max clip range
 
         if(audioState.signal >= AUDIO_CFG.SIGNAL_RANGE.clip) {
           audioState.clipping = true;
-          ctrl.audioState.clipPct = (audioState.volumePct - 1) * 2; // 50% = 100%
+          audioState.clipPct = (audioState.volumePct - 1) * 2; // 50% = 100%
         }
 
         else {
@@ -47,8 +47,13 @@
         };
       }
 
-      this.init = function($el) {
-        var canvas = $el[0];
+      this.init = function(el) {
+        if(!(el instanceof HTMLCanvasElement)) {
+          throw 'InvalidCanvasError';
+        }
+
+        var canvas = el;
+        
         canvas.height = 40;
         ctrl.c2dh.setContext(canvas.getContext('2d'));
         ctrl.onCanvasSizeChange(); // init these values
@@ -75,7 +80,7 @@
             ctrl.volumeColor);
         }
 
-        //clip bar
+        // clip bar
         if(ctrl.audioState.clipping) {
           ctrl.c2dh.drawRect(
             ctrl.volumePosRange.max, 0, 
@@ -89,7 +94,12 @@
     }
 
     function DbGaugeLink($scope, $el, $attrs, $ctrl) {
-      $ctrl.init($el);
+      try {
+        $ctrl.init($el[0]);
+      }
+      catch(e) {
+        console.error(e);
+      }
     }
   
 })();
