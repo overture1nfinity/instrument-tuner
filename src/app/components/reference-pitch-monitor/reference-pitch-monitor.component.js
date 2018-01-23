@@ -9,8 +9,10 @@
   
     /** @ngInject */
     function ReferencePitchMonitorController($scope, AUDIO_CFG, AudioMath, audioState, pitchDetect) {
+      var ctrl = this;
+
       $scope.audioState = audioState; // isolated scope
-      var prevInputFreq = 0;
+      this.prevInputFreq = 0;
 
       $scope.$on('updateRpm', function(e, data) {
         var inputFreq = audioState.signal;
@@ -30,6 +32,7 @@
               if(
                 audioState.refPitch.shouldInit || 
                 isNaN(audioState.refPitch.noteNum) || 
+                !audioState.refPitch.note || 
                 Math.abs(audioState.pitchDelta) >= AUDIO_CFG.PITCH_DELTA_ABSOLUTE_THRESHOLD) {
   
                   audioState.refPitch.noteNum = pitchDetect.noteFromPitch(pitch);
@@ -38,7 +41,7 @@
               }
   
               audioState.pitch = pitch;
-              prevInputFreq = inputFreq;
+              ctrl.prevInputFreq = inputFreq;
             }
 
             else _default = true;
