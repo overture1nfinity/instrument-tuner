@@ -19,7 +19,7 @@ gulp.task('html', ['inject', 'fonts', 'partials'], function() {
   };
 
   var cssFilter = $.filter('**/*.css', {restore: true});
-  var jsFilter = $.filter(['!**/*.spec.js', '**/*.js'], {restore: true});
+  var jsFilter = $.filter(['!**/*.spec.js', '!**/*.bku.js', '**/*.js'], {restore: true});
   var htmlFilter = $.filter('*.html', {restore: true});
 
   return gulp.src(path.join(config.paths.tmp, '/serve/*.html')).
