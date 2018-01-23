@@ -17,6 +17,7 @@ exports.paths.scripts = [
   path.join(exports.paths.src, '/**/*.js'),
   path.join(exports.paths.src, '/**/*.*.js'),
   path.join('!' + exports.paths.src, '/**/*.spec.js'),
+  path.join('!' + exports.paths.src, '/**/*.bku.js'),
 ];
 
 exports.wiredep = {

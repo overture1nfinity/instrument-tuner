@@ -28,6 +28,7 @@ var commonFiles = [
 ];
 
 var appFiles = [
+    { pattern: '../bower_components/angular-ui-router/release/angular-ui-router.min.js', watched: false },
     'app/**/*.module.js',
     'app/**/*.values.js',
     'app/**/*.service.js',
@@ -44,11 +45,31 @@ gulp.task('test-all', function(done) {
         configFile: path.join(__dirname, '../karma.conf.js'),
         files: files,
         preprocessors: {
-            '**/!(spec|test)/!(*spec|*test).js': ['coverage'],
+            '**/!(spec|test|bku)/!(*spec|*test|*bku).js': ['coverage'],
         },
         coverageReporter: {
             type: 'html',
             dir: '../reports/coverage/all/',
+        },
+        singleRun: singleRun,
+        autoWatch: !singleRun,
+    }, done).start();
+});
+
+
+gulp.task('test-app', function(done) {
+    var singleRun = argv.once || false;
+    var files = pckgFiles.concat(libFiles, commonFiles, appFiles);
+
+    return new KarmaServer({
+        configFile: path.join(__dirname, '../karma.conf.js'),
+        files: files,
+        preprocessors: {
+            'app/**/!(spec|test|bku)/!(*spec|*test|*bku).js': ['coverage'],
+        },
+        coverageReporter: {
+            type: 'html',
+            dir: '../reports/coverage/app/',
         },
         singleRun: singleRun,
         autoWatch: !singleRun,
@@ -64,7 +85,7 @@ gulp.task('test-common', function(done) {
         configFile: path.join(__dirname, '../karma.conf.js'),
         files: files,
         preprocessors: {
-            'common/**/!(spec|test)/!(*spec|*test).js': ['coverage'],
+            'common/**/!(spec|test|bku)/!(*spec|*test|*bku).js': ['coverage'],
         },
         coverageReporter: {
             type: 'html',
@@ -84,7 +105,7 @@ gulp.task('test-lib', function(done) {
         configFile: path.join(__dirname, '../karma.conf.js'),
         files: files,
         preprocessors: {
-            'lib/**/!(spec|test)/!(*spec|*test).js': ['coverage'],
+            'lib/**/!(spec|test|bku)/!(*spec|*test|*bku).js': ['coverage'],
         },
         coverageReporter: {
             type: 'html',
