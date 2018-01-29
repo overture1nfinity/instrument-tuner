@@ -34,6 +34,11 @@ var tags = {
         name: '/*@name*/',
         value: null,
     },
+    name_nq: {
+        name: '/*@name_nq*/',
+        value: null,
+        singleQuotes: false,
+    },
     module: {
         name: '/*@module*/',
         value: null,
@@ -47,6 +52,11 @@ var tags = {
         value: 'ComponentController',
         singleQuotes: false, // no quotes
     },
+    controller_wq: {
+        name: '/*@controller_wq*/',
+        value: 'ComponentController',
+        singleQuotes: true,
+    },
     controllerAs: {
         name: '/*@controllerAs*/',
         value: 'vm',
@@ -58,10 +68,19 @@ var filePaths = [
 
 
 gulp.task('component', function() {
+    var error = false;
+
     if(!argv.module) {
-        config.errorHandler('arg error')('--module not defined.');
-        return null;
+        config.errorHandler('arg error')('Arg --module is required.');
+        error = true;
     }
+
+    if(!argv.name) {
+        config.errorHandler('arg error')('Arg --name is required.');
+        error = true;
+    }
+
+    if(error) return null;
 
     var destPath = path.join(argv.module, 'components', argv.name);
 
@@ -73,5 +92,7 @@ gulp.task('component', function() {
         tags.templateUrl.value = path.join(moduleName, 'components', name, name + '.template.html');
         // escape all backslashes since we're injecting this in to an escapable string
         tags.templateUrl.value = tags.templateUrl.value.replace(/\\/g, '\\\\');
+
+        tags.name_nq.value = name.replace('\'', '');
     });
 });

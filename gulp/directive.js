@@ -42,6 +42,11 @@ var tags = {
         name: '/*@name*/',
         value: null,
     },
+    name_nq: {
+        name: '/*@name_nq*/',
+        value: null,
+        singleQuotes: false,
+    },
     module: {
         name: '/*@module*/',
         value: null,
@@ -54,6 +59,11 @@ var tags = {
         name: '/*@controller*/',
         value: 'DirectiveController',
         singleQuotes: false, // no quotes
+    },
+    controller_wq: {
+        name: '/*@controller_wq*/',
+        value: 'DirectiveController',
+        singleQuotes: true,
     },
     controllerAs: {
         name: '/*@controllerAs*/',
@@ -76,7 +86,7 @@ var filePaths = [
 
 gulp.task('directive', function() {
     if(!argv.module) {
-        config.errorHandler('arg error')('--module not defined.');
+        config.errorHandler('arg error')('Arg --module is required.');
         return null;
     }
 
@@ -84,10 +94,11 @@ gulp.task('directive', function() {
 
     return lib.copyTemplatesAndInjectVars(args, tags, filePaths, destPath, function(tags) {
         /*// replace the single quotes automatically added to the tag based on the flag singleQuotes:boolean
-        var moduleName = tags.module.value.replace(/'/g, '');
-        var name = tags.name.value.replace(/'/g, '');
+        var moduleName = tags.module.value.replace(/'/g, '');*/
+        tags.name_nq.value = tags.name.value.replace(/'/g, '');
+        tags.controller_wq.value = tags.controller.value;
 
-        tags.templateUrl.value = path.join(moduleName, 'directives', name, name + '.template.html');
+        /*tags.templateUrl.value = path.join(moduleName, 'directives', name, name + '.template.html');
         // escape all backslashes
         tags.templateUrl.value = tags.templateUrl.value.replace(/\\/g, '\\\\');*/
     });
