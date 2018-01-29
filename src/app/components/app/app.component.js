@@ -21,22 +21,36 @@
 
       var prevAudioSignal = null;
 
-      var gUMSuccess = function(stream) {
-        let mediaSourceState = audioState.mediaSource;
-        mediaSourceState.stream = audioContext.createMediaStreamSource(stream);
+      ctrl.initAlerts = function() {
+        ctrl.viewAlerts.enableMicAlert = Alerts.addAlert('info', 'inline-partials/enable-mic-alert.html', true, false);
+        ctrl.viewAlerts.notFoundAlert = Alerts.addAlert('danger', 'inline-partials/not-found-alert.html');
+        ctrl.viewAlerts.notSupportedAlert = Alerts.addAlert('danger', 'inline-partials/not-supported-alert.html');
+        ctrl.viewAlerts.unknownAlert = Alerts.addAlert('danger', 'inline-partials/unknown-alert.html');
+      }
 
-        // using only 1 processor to make sure all gauges are reading from the exact same data
-        mediaSourceState.appProcessor = audioContext.createScriptProcessor(AUDIO_CFG.FFT_SIZE, 2, 1);
-        mediaSourceState.appProcessor.onaudioprocess = ctrl.onAudioProcess;
+      ctrl.gUMSuccess = function(stream) {
+        try {
+          let mediaSourceState = audioState.mediaSource;
+          mediaSourceState.stream = audioContext.createMediaStreamSource(stream);
 
-        mediaSourceState.stream.connect(mediaSourceState.appProcessor);
-        mediaSourceState.appProcessor.connect(audioContext.destination);
+          // using only 1 processor to make sure all gauges are reading from the exact same data
+          mediaSourceState.appProcessor = audioContext.createScriptProcessor(AUDIO_CFG.FFT_SIZE, 2, 1);
+          mediaSourceState.appProcessor.onaudioprocess = ctrl.onAudioProcess;
+  
+          mediaSourceState.stream.connect(mediaSourceState.appProcessor);
+          mediaSourceState.appProcessor.connect(audioContext.destination);
+  
+          ctrl.viewAlerts.enableMicAlert.close();
+          $scope.$digest();
+        }
 
-        ctrl.viewAlerts.enableMicAlert.close();
-        $scope.$digest();
+        catch(e) {
+          console.error(e);
+          ctrl.viewAlerts.unknownAlert.open();
+        }
       };
 
-      var gUMError = function(err) {
+      ctrl.gUMError = function(err) {
         switch(err.name) {
           case 'NotFoundError':
             ctrl.viewAlerts.notFoundAlert.open();
@@ -48,21 +62,12 @@
         }
       };
 
-      var initAlerts = function() {
-        ctrl.viewAlerts.enableMicAlert = Alerts.addAlert('info', 'inline-partials/enable-mic-alert.html', true, false);
-        ctrl.viewAlerts.notFoundAlert = Alerts.addAlert('danger', 'inline-partials/not-found-alert.html');
-        ctrl.viewAlerts.notSupportedAlert = Alerts.addAlert('danger', 'inline-partials/not-supported-alert.html');
-        ctrl.viewAlerts.unknownAlert = Alerts.addAlert('danger', 'inline-partials/unknown-alert.html');
-      }
-
       ctrl.$onInit = function() {
-        initAlerts();
+        ctrl.initAlerts();
       };
 
-      ctrl.$onDestroy = function() {
-        ctrl.tickInterval.cancel();
-      };
-
+      // tested selectInput with a mock.
+      // istanbul ignore next
       ctrl.selectInput = function(e) {
         if(!getUserMedia) {
           ctrl.viewAlerts.notSupportedAlert.open();
@@ -81,12 +86,14 @@
               }
             }
           })
-          .then(gUMSuccess)
-          .catch(gUMError);
+        .then(ctrl.gUMSuccess)
+        .catch(ctrl.gUMError);
       };
 
+      // tested onAudioProcess with a mock.
+      // istanbul ignore next
       ctrl.onAudioProcess = function(e) {
-        let samples = e.inputBuffer.getChannelData(0); // need to add ability to choose between channels
+        let samples = e.inputBuffer.getChannelData(0);
         let avgSignal = AudioMath.calculateAverageSignal(samples);
         avgSignal = Math.min(avgSignal, AUDIO_CFG.SIGNAL_RANGE.max);
 
