@@ -17,8 +17,8 @@ describe('db-gauge.directive', function() {
 
     
 
-    function compileCanvas() {
-        var el = angular.element('<canvas db-gauge></canvas');
+    function compileEl() {
+        var el = angular.element('<canvas db-gauge></canvas>');
         _$compile(el)(scope);
         scope.$digest();
 
@@ -28,10 +28,10 @@ describe('db-gauge.directive', function() {
 
 
     it('should append to DOM successfully', function() {
-        var el = compileCanvas();
+        var el = compileEl();
 
         document.body.appendChild(el[0]);
-        expect(document.getElementsByTagName('canvas')[0]).toBeDefined();
+        expect(document.querySelector('[db-gauge]')).toBeDefined();
     });
 
     
