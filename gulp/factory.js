@@ -31,6 +31,11 @@ var tags = {
         name: '/*@name*/',
         value: null,
     },
+    name_nq: {
+        name: '/*@name_nq*/',
+        value: null,
+        singleQuotes: false,
+    },
     module: {
         name: '/*@module*/',
         value: null,
@@ -48,7 +53,7 @@ var filePaths = [
 
 gulp.task('factory', function() {
     if(!argv.module) {
-        config.errorHandler('arg error')('--module not defined.');
+        config.errorHandler('arg error')('Arg --module is required.');
         return null;
     }
 
@@ -56,5 +61,7 @@ gulp.task('factory', function() {
 
     return lib.copyTemplatesAndInjectVars(args, tags, filePaths, destPath, function(tags) {
         // before inject
+        var name = tags.name.value.replace(/'/g, '');
+        tags.name_nq.value = name.replace('\'', '');
     });
 });

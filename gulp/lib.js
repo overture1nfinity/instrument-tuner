@@ -38,6 +38,7 @@ afterInjectCb=function(){}) {
         destPath && destPath.length > 0
     ) {
         var _tags = Object.assign({}, tags);
+        var err = false;
         destPath = path.join('src', destPath);
 
         /** assign tag values from args */
@@ -57,6 +58,7 @@ afterInjectCb=function(){}) {
 
                 else if(arg.required) {
                     config.errorHandler('arg error')("Arg '--" + arg.name + "' is required.");
+                    err = true;
                 }
             }
 
@@ -65,6 +67,8 @@ afterInjectCb=function(){}) {
             }
 
         });
+
+        if(err) return;
 
         beforeInjectCb(_tags);
 

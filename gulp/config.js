@@ -10,7 +10,7 @@ exports.paths = {
   src: 'src',
   dist: 'dist',
   tmp: '.tmp',
-  templates: 'general_templates',
+  templates: 'gulp/templates',
 };
 
 exports.paths.scripts = [
