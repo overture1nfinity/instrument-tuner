@@ -11,8 +11,8 @@
         SMOOTHING_CONSTANT: 0.7, // % 0.0 to 1.0
         SIGNAL_RANGE: {
             min: 0.1,
-            max: 5.3,
-            clip: 4.8,
+            max: 4.9,
+            clip: 4.4,
         },
         TONE_NAMES: [
             '--',
