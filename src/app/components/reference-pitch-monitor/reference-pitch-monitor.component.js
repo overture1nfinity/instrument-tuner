@@ -26,7 +26,7 @@
               if(!isNaN(audioState.refPitch.noteNum) && !audioState.refPitch.shouldInit) {
                 audioState.pitchDelta = AudioMath.calculatePitchDelta(
                   pitchDetect.frequencyFromNoteNumber(audioState.refPitch.noteNum),
-                  pitch);
+                  pitch).toFixed(1);
               }
               
               if(

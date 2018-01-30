@@ -60,6 +60,8 @@
             ctrl.viewAlerts.unknownAlert.open();
             break;
         }
+
+        $scope.$digest();
       };
 
       ctrl.$onInit = function() {
