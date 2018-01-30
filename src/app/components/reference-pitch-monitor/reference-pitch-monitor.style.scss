@@ -6,7 +6,7 @@
 
     .rpm-main {
         display: flex;
-        width: 33%;
+        width: 66%;
         justify-content: center;
     }
 
@@ -18,7 +18,7 @@
         margin-right: 4px;
 
         .ref-pitch-text {
-            font-size: 24px;
+            font-size: 26px;
         }
 
     }
@@ -34,9 +34,15 @@
         .pitch-delta-text {
             text-align: left;
             color: gray;
-            font-size: 10px;
+            font-size: 12px;
         }
 
+    }
+
+    @media(max-width:767px) {
+        .rpm-main {
+            width: 100%;
+        }
     }
 
 }

@@ -21,9 +21,9 @@
       this.canvasWidth = null;
       this.canvasHeight = null;
       this.volumePosRange = null;
-      this.clipLinePosPct = 0.95;
+      this.clipLinePosPct = 0.90;
       this.clipColor = 'red';
-      this.volumeColor = 'green';
+      this.volumeColor = '#3ae024';
 
       $scope.$on('updateDbGauge', function(e, data) {
         audioState.volumePct = Math.min(1.5, audioState.signal / AUDIO_CFG.SIGNAL_RANGE.clip); // 150% is max clip range

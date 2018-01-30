@@ -1,23 +1,16 @@
-<page>
-    <page-header></page-header>
-
-    <page-content>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <alerts instance="vm.alerts" tpl-scope="vm"></alerts>
-                </div>
-            </div>
-            <div class="widget-row">
-                <canvas class="col-md-2 col-xs-4 widget" db-gauge></canvas>
-                <div class="col-md-4 col-xs-6 widget"><reference-pitch-monitor></reference-pitch-monitor></div>
-                <div class="col-md-2 col-xs-4 widget"><settings></settings></div>
-            </div>
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-md-10 col-md-offset-1">
+            <alerts instance="vm.alerts" tpl-scope="vm"></alerts>
         </div>
-    </page-content>
+    </div>
+    <div class="widget-row">
+        <canvas class="col-md-2 col-xs-4 widget" db-gauge></canvas>
+        <div class="col-md-3 col-xs-5 widget"><reference-pitch-monitor></reference-pitch-monitor></div>
+    </div>
+</div>
 
-    <page-footer></page-footer>
-</page>
+
 
 <script type="text/ng-template" id="inline-partials/enable-mic-alert.html">
     <button class="btn btn-primary" ng-click="vm.tplScope.selectInput()">ENABLE YOUR MIC</button>
