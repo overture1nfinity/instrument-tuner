@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function Canvas2DHandler(_, requestAnimationFrame) {
-        var srvc = this;
         var _ctx = null;
         this._rafId = null;
         this.canvas = null;

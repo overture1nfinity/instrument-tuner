@@ -40,10 +40,10 @@
                 var signal = -Infinity;
 
                 if(samples instanceof Float32Array) {
-                    let maxMagnitude = -Infinity;
+                    var maxMagnitude = -Infinity;
 
-                    for(let i = 0; i < samples.length; i++) {
-                        let s = samples[i];
+                    for(var i = 0; i < samples.length; i++) {
+                        var s = samples[i];
                         if(maxMagnitude < s) maxMagnitude = s;
                     }
 

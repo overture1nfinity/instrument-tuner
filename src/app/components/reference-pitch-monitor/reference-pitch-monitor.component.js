@@ -4,7 +4,7 @@
     angular.module('app').component('referencePitchMonitor', {
       controller: ReferencePitchMonitorController,
       controllerAs: 'vm',
-      templateUrl: 'app\\components\\reference-pitch-monitor\\reference-pitch-monitor.template.html',
+      templateUrl: 'app/components/reference-pitch-monitor/reference-pitch-monitor.template.html',
     });
   
     /** @ngInject */
@@ -20,7 +20,7 @@
         
         if(inputFreq >= AUDIO_CFG.SIGNAL_RANGE.min) {
 
-            let pitch = pitchDetect.autoCorrelate(data.samples, AUDIO_CFG.SAMPLE_RATE);
+            var pitch = pitchDetect.autoCorrelate(data.samples, AUDIO_CFG.SAMPLE_RATE);
 
             if(!isNaN(pitch) && pitch > -1) {
               if(!isNaN(audioState.refPitch.noteNum) && !audioState.refPitch.shouldInit) {

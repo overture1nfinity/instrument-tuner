@@ -76,8 +76,9 @@ pitchDetect.autoCorrelate = function( buf, sampleRate ) {
 	var rms = 0;
 	var foundGoodCorrelation = false;
 	var correlations = new Array(MAX_SAMPLES);
+	var i = 0;
 
-	for (var i=0;i<SIZE;i++) {
+	for (i=0;i<SIZE;i++) {
 		var val = buf[i];
 		rms += val*val;
 	}
@@ -92,7 +93,7 @@ pitchDetect.autoCorrelate = function( buf, sampleRate ) {
 	for (var offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
 		var correlation = 0;
 
-		for (var i=0; i<MAX_SAMPLES; i++) {
+		for (i=0; i<MAX_SAMPLES; i++) {
 			correlation += Math.abs((buf[i])-(buf[i+offset]));
 		}
 		correlation = 1 - (correlation/MAX_SAMPLES);
