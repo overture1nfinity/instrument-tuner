@@ -90,8 +90,7 @@ gulp.task('component', function() {
         var name = tags.name.value.replace(/'/g, '');
 
         tags.templateUrl.value = path.join(moduleName, 'components', name, name + '.template.html');
-        // escape all backslashes since we're injecting this in to an escapable string
-        tags.templateUrl.value = tags.templateUrl.value.replace(/\\/g, '\\\\');
+        tags.templateUrl.value = tags.templateUrl.value.replace(/\\/g, '/');
 
         tags.name_nq.value = name.replace('\'', '');
     });

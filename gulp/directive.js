@@ -100,6 +100,6 @@ gulp.task('directive', function() {
 
         /*tags.templateUrl.value = path.join(moduleName, 'directives', name, name + '.template.html');
         // escape all backslashes
-        tags.templateUrl.value = tags.templateUrl.value.replace(/\\/g, '\\\\');*/
+        tags.templateUrl.value = tags.templateUrl.value.replace(///g, '//');*/
     });
 });
