@@ -1,8 +1,6 @@
 'use strict';
 
-var gulp = require('gulp');
 var gulpUtil = require('gulp-util');
-var path = require('path');
 
 exports.mainAngularModule = 'app';
 
@@ -10,15 +8,21 @@ exports.paths = {
   src: 'src',
   dist: 'dist',
   tmp: '.tmp',
+  partials: '.tmp/partials',
   templates: 'gulp/templates',
+  scripts: [
+    'src/**/*.js',
+    '!src/**/*.{spec.js,test.js,bku.js}',
+  ]
 };
 
-exports.paths.scripts = [
-  path.join(exports.paths.src, '/**/*.js'),
-  path.join(exports.paths.src, '/**/*.*.js'),
-  path.join('!' + exports.paths.src, '/**/*.spec.js'),
-  path.join('!' + exports.paths.src, '/**/*.bku.js'),
-];
+exports.templatecache = {
+  filename: 'templateCacheHtml.js',
+  options: {
+    module: 'app',
+    root: '',
+  },
+};
 
 exports.wiredep = {
   directory: 'bower_components',
@@ -32,7 +36,7 @@ exports.sass = {
   },
 };
 
-exports.htmlminOptions = {
+exports.htmlmin = {
   collapseBooleanAttributes: true,
   collapseWhitespace: true,
   removeAttributeQuotes: true,

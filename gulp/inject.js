@@ -1,36 +1,47 @@
 'use strict';
 
-var config = require('./config');
-
-var $ = require('gulp-load-plugins')();
-var _ = require('lodash');
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+var _ = require('lodash');
 var path = require('path');
 var wiredep = require('wiredep').stream;
 
-gulp.task('inject', ['scripts', 'styles'], function() {
-  var injectStyles = gulp.src([
-    path.join(config.paths.tmp, '/serve/app/**/*.css'),
-    path.join('!' + config.paths.tmp, '/serve/app/vendor.css'),
-  ], {read: false});
+var config = require('./config');
 
+var destPath = path.join(config.paths.tmp, '/serve');
+
+/**
+ * Inject scripts and styles into HTML files placed directly in the source dir.
+ * @gulptask inject
+ */
+gulp.task('inject', ['scripts', 'styles'], function() {
   var injectScripts = gulp.src(config.paths.scripts).
-      pipe($.angularFilesort()).
-      on('error', config.errorHandler('AngularFilesort'));
+    pipe($.angularFilesort()).
+    on('error', config.errorHandler('Angular Filesort'));
+
+  var injectStyles = gulp.src(path.join(config.paths.tmp,
+    '/serve/app/**/*.css'), {read: false});
 
   var injectOptions = {
     addRootSlash: false,
-    ignorePath: [config.paths.src, path.join(config.paths.tmp, '/serve')],
+    ignorePath: [
+      config.paths.src,
+      destPath,
+    ],
   };
 
   return gulp.src(path.join(config.paths.src, '/*.html')).
-      pipe($.inject(injectStyles, injectOptions)).
-      pipe($.inject(injectScripts, injectOptions)).
-      pipe(wiredep(_.extend({}, config.wiredep))).
-      pipe(gulp.dest(path.join(config.paths.tmp, '/serve')));
+    pipe($.inject(injectScripts, injectOptions)).
+    pipe($.inject(injectStyles, injectOptions)).
+    pipe(wiredep(_.extend({}, config.wiredep))).
+    pipe(gulp.dest(destPath));
 });
 
-gulp.task('inject-reload', ['inject'], function() {
+/**
+ * Start `inject` task and launch Browsersync reloading after.
+ * @gulptask inject:reload
+ */
+gulp.task('inject:reload', ['inject'], function() {
   browserSync.reload();
 });

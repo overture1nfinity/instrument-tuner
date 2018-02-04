@@ -119,5 +119,5 @@ afterInjectCb=function(){}) {
 
 // from MDN
 function escapeRegExp(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return str.replace(/[.*+?^${}()|[\]/]/g, "/$&");
 }

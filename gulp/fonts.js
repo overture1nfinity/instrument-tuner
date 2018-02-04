@@ -9,8 +9,13 @@ var gulp = require('gulp');
 var path = require('path');
 
 gulp.task('fonts', function() {
-  return gulp.src($.mainBowerFiles()).
-      pipe($.filter('**/*.{eot,otf,svg,ttf,woff,woff2}')).
-      pipe($.flatten());
-      pipe(gulp.dest(path.join(config.paths.dist, '/fonts/')));
+  return gulp.src('assets/fonts/*.{eot,otf,svg,ttf,woff,woff2}').
+      pipe($.flatten()).
+      pipe(gulp.dest(path.join(config.paths.tmp, 'serve/fonts/')));
+});
+
+gulp.task('fonts:dist', function() {
+  return gulp.src('assets/fonts/*.{eot,otf,svg,ttf,woff,woff2}').
+      pipe($.flatten()).
+      pipe(gulp.dest(path.join(config.paths.dist, 'styles/fonts/')));
 });
