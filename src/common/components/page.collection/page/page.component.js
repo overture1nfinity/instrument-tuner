@@ -4,7 +4,7 @@
     angular.module('common').component('page', {
       controller: PageController,
       controllerAs: 'vm',
-      templateUrl: 'common\\components\\page.collection\\page\\page.template.html',
+      templateUrl: 'common/components/page.collection/page/page.template.html',
       transclude: true,
     });
   

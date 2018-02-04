@@ -4,7 +4,7 @@
     angular.module('app').component('appRoot', {
       controller: AppController,
       controllerAs: 'vm',
-      templateUrl: 'app\\components\\app\\app.template.html',
+      templateUrl: 'app/components/app/app.template.html',
     });
   
     /** @ngInject */
@@ -22,7 +22,7 @@
       var prevAudioSignal = null;
 
       ctrl.initAlerts = function() {
-        ctrl.viewAlerts.enableMicAlert = Alerts.addAlert('info', 'inline-partials/enable-mic-alert.html', true, false);
+        ctrl.viewAlerts.enableMicAlert = Alerts.addAlert('primary', 'inline-partials/enable-mic-alert.html', true, false);
         ctrl.viewAlerts.notFoundAlert = Alerts.addAlert('danger', 'inline-partials/not-found-alert.html');
         ctrl.viewAlerts.notSupportedAlert = Alerts.addAlert('danger', 'inline-partials/not-supported-alert.html');
         ctrl.viewAlerts.unknownAlert = Alerts.addAlert('danger', 'inline-partials/unknown-alert.html');
@@ -30,7 +30,7 @@
 
       ctrl.gUMSuccess = function(stream) {
         try {
-          let mediaSourceState = audioState.mediaSource;
+          var mediaSourceState = audioState.mediaSource;
           mediaSourceState.stream = audioContext.createMediaStreamSource(stream);
 
           // using only 1 processor to make sure all gauges are reading from the exact same data
@@ -95,8 +95,8 @@
       // tested onAudioProcess with a mock.
       // istanbul ignore next
       ctrl.onAudioProcess = function(e) {
-        let samples = e.inputBuffer.getChannelData(0);
-        let avgSignal = AudioMath.calculateAverageSignal(samples);
+        var samples = e.inputBuffer.getChannelData(0);
+        var avgSignal = AudioMath.calculateAverageSignal(samples);
         avgSignal = Math.min(avgSignal, AUDIO_CFG.SIGNAL_RANGE.max);
 
 

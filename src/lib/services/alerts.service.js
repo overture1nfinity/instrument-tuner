@@ -16,7 +16,7 @@
             /* istanbul ignore next */
             additionalClasses = (additionalClasses !== undefined) ? additionalClasses : '';
             
-            let alert = {
+            var alert = {
                 id: this.data.length,
                 type: type,
                 show: open,
@@ -27,7 +27,7 @@
 
             this.data.push(alert);
 
-            let alertHandle = {
+            var alertHandle = {
                 open: function() {
                     alert.show = true;
                 },
