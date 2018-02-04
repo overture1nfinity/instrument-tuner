@@ -30,7 +30,7 @@
 
         if(audioState.signal >= AUDIO_CFG.SIGNAL_RANGE.clip) {
           audioState.clipping = true;
-          audioState.clipPct = (audioState.volumePct - 1) * 2; // 50% = 100%
+          audioState.clipPct = (audioState.volumePct - 1) * 2; // 50% actual = 100% displayed
         }
 
         else {
@@ -72,7 +72,7 @@
 
         // volume bar
         if(ctrl.audioState.volumePct > 0) {
-          let clampedVolumePct = Math.min(1, ctrl.audioState.volumePct);
+          var clampedVolumePct = Math.min(1, ctrl.audioState.volumePct);
 
           ctrl.c2dh.drawRect(
             ctrl.volumePosRange.min, 0, 
