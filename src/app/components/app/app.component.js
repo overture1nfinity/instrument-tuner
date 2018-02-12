@@ -7,7 +7,7 @@
       templateUrl: 'app/components/app/app.template.html',
     });
   
-    /** @ngInject */
+    
     function AppController($scope, getUserMedia, AUDIO_CFG, audioContext, AudioMath, audioState, Alerts) {
 
       var ctrl = this;
@@ -16,6 +16,7 @@
         enableMicAlert: null,
         notFoundAlert: null,
         notSupportedAlert: null,
+        notAllowedAlert: null,
         unknownAlert: null,
       };
 
@@ -25,6 +26,7 @@
         ctrl.viewAlerts.enableMicAlert = Alerts.addAlert('primary', 'inline-partials/enable-mic-alert.html', true, false);
         ctrl.viewAlerts.notFoundAlert = Alerts.addAlert('danger', 'inline-partials/not-found-alert.html');
         ctrl.viewAlerts.notSupportedAlert = Alerts.addAlert('danger', 'inline-partials/not-supported-alert.html');
+        ctrl.viewAlerts.notAllowedAlert = Alerts.addAlert('danger', 'inline-partials/not-allowed-alert.html');
         ctrl.viewAlerts.unknownAlert = Alerts.addAlert('danger', 'inline-partials/unknown-alert.html');
       }
 
@@ -56,7 +58,12 @@
             ctrl.viewAlerts.notFoundAlert.open();
             break;
 
+          case 'NotAllowedError':
+            ctrl.viewAlerts.notAllowedAlert.open();
+            break;
+
           default:
+            console.error(err);
             ctrl.viewAlerts.unknownAlert.open();
             break;
         }
@@ -68,7 +75,6 @@
         ctrl.initAlerts();
       };
 
-      // tested selectInput with a mock.
       // istanbul ignore next
       ctrl.selectInput = function(e) {
         if(!getUserMedia) {
@@ -87,16 +93,18 @@
                 googHighpassFilter: false,
               }
             }
-          })
-        .then(ctrl.gUMSuccess)
-        .catch(ctrl.gUMError);
+          },
+        ctrl.gUMSuccess,
+        ctrl.gUMError);
+        // .then(ctrl.gUMSuccess)
+        // .catch(ctrl.gUMError);
       };
 
       // tested onAudioProcess with a mock.
       // istanbul ignore next
       ctrl.onAudioProcess = function(e) {
         var samples = e.inputBuffer.getChannelData(0);
-        var avgSignal = AudioMath.calculateAverageSignal(samples);
+        var avgSignal = AudioMath.calculateAverageSignal(samples, AUDIO_CFG.SAMPLE_RATE, AUDIO_CFG.NFFT_SIZE);
         avgSignal = Math.min(avgSignal, AUDIO_CFG.SIGNAL_RANGE.max);
 
 
