@@ -12,7 +12,7 @@
       }
     });
   
-    /** @ngInject */
+    
     function /*@controller*/() {}
     function /*@link*/($scope, $el, $attrs) {}
   

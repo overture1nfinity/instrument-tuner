@@ -7,7 +7,7 @@
       templateUrl: /*@templateUrl*/,
     });
   
-    /** @ngInject */
+    
     function /*@controller*/() {}
   
 })();

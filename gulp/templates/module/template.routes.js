@@ -3,7 +3,7 @@
   
     angular.module(/*@name*/).config(routerConfig);
   
-    /** @ngInject */
+    
     function routerConfig() {
       
     }
