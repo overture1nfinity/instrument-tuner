@@ -1,41 +1,33 @@
 'use strict';
 
-var config = require('./config');
-
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
 var path = require('path');
 
+var config = require('./config');
+var scripts = require('./scripts');
+var styles = require('./styles');
+
+/**
+ * Build project and watch for all changes.
+ * @gulptask watch
+ */
 gulp.task('watch', ['inject'], function() {
-  gulp.watch([path.join(config.paths.src, '/*.html'), 'bower.json'],
-      ['inject-reload']);
+  // When any of root HTML files or `bower.json` updates, we want to launch
+  // `inject` task, since it injects Bower dependencies.
+  gulp.watch([path.join(config.paths.src, '*.html'), 'bower.json'],
+    ['inject:reload']);
 
-  gulp.watch([
-    path.join(config.paths.src, '/**/*.css'),
-    path.join(config.paths.src, '/**/*.scss'),
-  ], function(event) {
-    if (isOnlyChange(event)) {
-      gulp.start('styles-reload');
-    }
-    else {
-      gulp.start('inject-reload');
-    }
+  scripts.watch(function() {
+    gulp.start('inject:reload');
   });
 
-  gulp.watch(config.paths.scripts, function(event) {
-    if (isOnlyChange(event)) {
-      gulp.start('scripts-reload');
-    }
-    else {
-      gulp.start('inject-reload');
-    }
+  styles.watch(function() {
+    gulp.start('inject:reload');
   });
 
-  gulp.watch(path.join(config.paths.src, '/**/*.html'), function(event) {
+  // Reload when any of app HTML files updates.
+  gulp.watch(path.join(config.paths.src, '**/*.html'), function(event) {
     browserSync.reload(event.path);
   });
 });
-
-function isOnlyChange(event) {
-  return event.type === 'changed';
-}

@@ -1,54 +1,87 @@
 'use strict';
 
-var config = require('./config');
-
-var $ = require('gulp-load-plugins')();
-var _ = require('lodash');
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
-var gulpUtil = require('gulp-util');
+var $ = require('gulp-load-plugins')();
+var _ = require('lodash');
 var path = require('path');
 var wiredep = require('wiredep').stream;
 
+var config = require('./config');
+
+var indexPath = path.join(config.paths.src, 'index.scss');
+
+/**
+ * Build styles.
+ * @gulptask styles
+ */
 gulp.task('styles', function() {
   return buildStyles();
 });
 
-gulp.task('styles-reload', function() {
-  return buildStyles().pipe(browserSync.stream({match: '**/*.css'}));
+/**
+ * Build styles and watch for changes.
+ * @gulptask styles:watch
+ */
+gulp.task('styles:watch', ['styles'], function() {
+  return watch();
 });
 
-var buildStyles = function() {
+/**
+ * Inject all SCSS files to the index file and build CSS.
+ * @return {*}
+ */
+function buildStyles() {
+  // What to inject?
   var injectFiles = gulp.src([
-    path.join(config.paths.src, '/**/' + (config.sass.excludeUnderscored ? '[^_]' : '') + '*.scss'),
-    path.join('!' + config.paths.src, '/index.scss'),
+    // Exclude underscored files from injecting depending on configuration.
+    path.join(config.paths.src, '/**/',
+      (config.sass.excludeUnderscored ? '[^_]' : '') + '*.scss'),
+    '!' + indexPath,
   ], {read: false});
 
+  // How to inject?
   var injectOptions = {
     addRootSlash: false,
     transform: function(filePath) {
-      filePath = filePath.replace(config.paths.src + '/', '');
+      filePath = filePath.replace(path.join(config.paths.src, '/'), '');
       return '@import "' + filePath + '";';
     },
     starttag: '// injector',
     endtag: '// endinjector',
   };
 
-  var res = null;
-  try {
-    res = gulp.src([
-      path.join(config.paths.src, '/index.scss'),
-    ]).
-        pipe($.inject(injectFiles, injectOptions)).
-        pipe(wiredep(_.extend({}, config.wiredep))).
-        pipe($.sourcemaps.init()).
-        pipe($.sass(config.sass.options)).
-        on('error', config.errorHandler('Sass')).
-        pipe($.autoprefixer()).
-        on('error', config.errorHandler('Autoprefixer')).
-        pipe($.sourcemaps.write('maps')).
-        pipe(gulp.dest(path.join(config.paths.tmp, '/serve/app/')));
-  }
-  catch(e) { config.errorHandler('injection err')(e.toString()); }
-  return res;
+  return gulp.src(indexPath).
+    pipe($.inject(injectFiles, injectOptions)).
+    // Inject Bower Sass dependencies if present.
+    pipe(wiredep(_.extend({}, config.wiredep))).
+    pipe($.sourcemaps.init()).
+    pipe($.sass(config.sass.options)).on('error', config.errorHandler('Sass')).
+    pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer')).
+    pipe($.sourcemaps.write('maps')).
+    pipe(gulp.dest(path.join(config.paths.tmp, 'serve/app/')));
 }
+
+/**
+ * Watch for changes.
+ * @param {Function|null} [notOnlyChangedCallback=null]
+ * @return {*}
+ */
+function watch(notOnlyChangedCallback) {
+  notOnlyChangedCallback = notOnlyChangedCallback || null;
+
+  return gulp.watch(path.join(config.paths.src, '**/*.scss'),
+    function(event) {
+      if (event.type !== 'changed') {
+        notOnlyChangedCallback();
+        return;
+      }
+
+      buildStyles().
+        pipe($.debug({title: 'styles modified:'})).
+        // Push only CSS files to the BrowserSync stream to prevent full reload.
+        pipe(browserSync.stream({match: '**/*.css'}));
+    });
+}
+
+exports.watch = watch;
