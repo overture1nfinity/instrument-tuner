@@ -5,10 +5,7 @@
     .constant('_', window._) // lodash
     .constant('requestAnimationFrame', (window.requestAnimationFrame || window.webkitRequestAnimationFrame))
     .constant('audioContext', new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext)())
-    .constant('getUserMedia', 
-        navigator.mediaDevices.getUserMedia || 
-        navigator.mediaDevices.webkitGetUserMedia || 
-        navigator.mediaDevices.mozGetUserMedia)
+    .constant('getUserMedia', window.navigator.getUserMedia)
     .constant('pitchDetect', window.pitchDetect)
-  
+    //.constant('browserDetails', window.adapter.browserDetails) // not used currently
 })();
