@@ -8,7 +8,7 @@
       transclude: true,
     });
   
-    /** @ngInject */
+    
     /* istanbul ignore next */
     function PageContentController() {}
   

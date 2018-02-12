@@ -3,7 +3,7 @@
 
     angular.module('lib').service('Canvas2DHandler', Canvas2DHandler);
 
-    /** @ngInject */
+    
     function Canvas2DHandler(_, requestAnimationFrame) {
         var _ctx = null;
         this._rafId = null;

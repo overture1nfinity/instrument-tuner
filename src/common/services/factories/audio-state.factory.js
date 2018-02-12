@@ -3,7 +3,7 @@
 
     angular.module('common').factory('audioState', AudioStateFactory);
 
-    /** @ngInject */
+    
     /* istanbul ignore next */
     function AudioStateFactory(AUDIO_CFG) {
         return {
