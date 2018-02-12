@@ -3,7 +3,7 @@
 
     angular.module('lib').service('Alerts', AlertsService);
 
-    /** @ngInject */
+    
     function AlertsService(_) {
         var srvc = this;
         srvc.data = [];

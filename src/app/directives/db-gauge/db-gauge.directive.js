@@ -3,15 +3,15 @@
     angular.module('app').controller('DbGaugeController', DbGaugeController); // for testing
     angular.module('app').directive('dbGauge', function() {
       return {
-        controller: DbGaugeController,
         link: DbGaugeLink,
         controllerAs: 'vm',
         restrict: 'A',
         scope: {},
+        controller: DbGaugeController,
       }
     });
   
-    /** @ngInject */
+    
     function DbGaugeController($scope, AUDIO_CFG, audioState, Canvas2DHandler) {
       var ctrl = this;
 

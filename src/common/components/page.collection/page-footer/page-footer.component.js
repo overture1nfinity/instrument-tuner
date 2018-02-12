@@ -7,7 +7,7 @@
       templateUrl: 'common/components/page.collection/page-footer/page-footer.template.html',
     });
   
-    /** @ngInject */
+    
     /* istanbul ignore next */
     function PageFooterController() {}
   

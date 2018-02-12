@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    font-family: 'Rambla', sans-serif;
+    font-family: 'Open Sans';
 
     .rpm-main {
         display: flex;
@@ -19,7 +19,7 @@
         margin-right: 4px;
 
         .ref-pitch-text {
-            font-size: 26px;
+            font-size: 32px;
         }
 
     }
@@ -35,7 +35,7 @@
         .pitch-delta-text {
             text-align: left;
             color: gray;
-            font-size: 11px;
+            font-size: 13px;
         }
 
     }

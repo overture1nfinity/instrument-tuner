@@ -7,7 +7,7 @@
       templateUrl: 'app/components/reference-pitch-monitor/reference-pitch-monitor.template.html',
     });
   
-    /** @ngInject */
+    
     function ReferencePitchMonitorController($scope, AUDIO_CFG, AudioMath, audioState, pitchDetect) {
       var ctrl = this;
 

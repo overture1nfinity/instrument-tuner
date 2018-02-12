@@ -1,10 +1,10 @@
 (function() {
     'use strict';
 
-    angular.module('common').factory('AudioMath', AudioMathFactory);
+    angular.module('lib').factory('AudioMath', AudioMathFactory);
 
-    /** @ngInject */
-    function AudioMathFactory(_, AUDIO_CFG, pitchDetect) {
+    
+    function AudioMathFactory(_, pitchDetect) {
 
         return {
             /**
@@ -34,9 +34,11 @@
             /**
              * @summary Calculates the average signal from a Float32Array of signal values.
              * @param {Float32Array} samples The samples of signal data to calculate the average of.
+             * @param {number} sampleRate Sample rate.
+             * @param {number} nfftSize 1/2 FFT size. Found in the AnalyserNode of the Web Audio API.
              * @returns {float} The average signal from samples.
              */
-            calculateAverageSignal: function(samples) {
+            calculateAverageSignal: function(samples, sampleRate, nfftSize) {
                 var signal = -Infinity;
 
                 if(samples instanceof Float32Array) {
@@ -47,7 +49,7 @@
                         if(maxMagnitude < s) maxMagnitude = s;
                     }
 
-                    signal = (maxMagnitude * (AUDIO_CFG.SAMPLE_RATE / AUDIO_CFG.NFFT_SIZE)) / 10
+                    signal = (maxMagnitude * (sampleRate / nfftSize)) / 10
                 }
 
                 return signal;
